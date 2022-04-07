@@ -1,0 +1,43 @@
+[
+    {
+        "id": "1",
+        "name": "Rewind",
+        "artistName": "Wonder Girls",
+        "albumName": "REBOOT",
+        "isLiked": false,
+        "imageName": "WonderGirls_REBOOT_Album"
+    },
+    {
+        "id": "2",
+        "name": "Dreamer",
+        "artistName": "NCT 127",
+        "albumName": "Sticker",
+        "isLiked": true,
+        "imageName": "NCT127_Sticker"
+    },
+    {
+        "id": "3",
+        "name": "Rainbow",
+        "artistName": "NCT Dream",
+        "albumName": "Hot Sauce",
+        "isLiked": true,
+        "imageName": "NCT_Dream_Hot_Sauce"
+    },
+    {
+        "id": "4",
+        "name": "Rewind",
+        "artistName": "WayV",
+        "albumName": "Kick Back",
+        "isLiked": true,
+        "imageName": "WayV_Kick_Back"
+    },
+    {
+        "id": "5",
+        "name": "RESONANCE",
+        "artistName": "NCT 2020",
+        "albumName": "RESONANCE",
+        "isLiked": true,
+        "imageName": "NCT_Resonance"
+    }
+    
+]
