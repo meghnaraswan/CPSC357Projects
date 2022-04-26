@@ -8,6 +8,17 @@
 import SwiftUI
 import CoreGraphics
 
+// any transistion extension
+    // used to add transistion on airplane image to slide up rather than sideways
+extension AnyTransition {
+    static var slipeUp: AnyTransition {
+        AnyTransition.asymmetric(
+            insertion: .move(edge: .bottom),
+            removal: .move(edge: .top)
+        )
+    }
+}
+
 struct ContentView: View {
     
     @State private var selection = 1
@@ -30,6 +41,7 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $selection) {
             
+            //Car Tab View
             GeometryReader { geometry in
                 ZStack{
                     Path { path in
@@ -67,6 +79,8 @@ struct ContentView: View {
                       LinearGradient(gradient: .init(colors: [Color.green, Color.blue]), startPoint: UnitPoint(x: 0.5, y: 0), endPoint: UnitPoint(x: 0.5, y: 1))
                     )
                     .rotationEffect(.degrees(rotation))
+                    
+                    //car image spins 360 degrees on the tap gesture
                     Image(systemName: "car")
                         .resizable()
                         .opacity(0.7)
@@ -84,14 +98,17 @@ struct ContentView: View {
                 Text("Car")
             } .tag(1)
             
+            //Bicycle Tab View
             ZStack {
-              ForEach(0..<4) { i in
-                Rectangle()
-                  .fill(
-                    LinearGradient(gradient: .init(colors: [Color.yellow, Color.pink]), startPoint: .bottomLeading, endPoint: .topTrailing)
-                  )
-                  .frame(width: 250, height: 250)
-                  .rotationEffect(.degrees(Double(i) * 30))
+                ForEach(0..<4) { i in
+                    Rectangle()
+                        .fill(
+                            LinearGradient(gradient: .init(colors: [Color.yellow, Color.pink]), startPoint: .bottomLeading, endPoint: .topTrailing)
+                        )
+                        .frame(width: 250, height: 250)
+                        .rotationEffect(.degrees(Double(i) * 30))
+
+                    //bicycle image increases and decreases opacity as the maginifcation gesture is used
                     if canView {
                         Image(systemName: "bicycle")
                             .resizable()
@@ -100,19 +117,19 @@ struct ContentView: View {
                             .opacity(finalAmount + currentAmount)
                             .frame(width: 240, height: 160)
                             .scaleEffect(CGFloat(finalAmount + currentAmount))
-                                .gesture(
-                                    MagnificationGesture()
-                                        .onChanged { amount in
-                                            currentAmount = Double(amount - 1)
-                                            currentOpacity = Double(amount - 1)
-                                        }
-                                        .onEnded { amount in
-                                            finalAmount += currentAmount
-                                            currentAmount = 0
-                                            finalOpacity += currentOpacity
-                                            currentOpacity = 0
-                                        }
-                                )
+                            .gesture(
+                                MagnificationGesture()
+                                    .onChanged { amount in
+                                        currentAmount = Double(amount - 1)
+                                        currentOpacity = Double(amount - 1)
+                                    }
+                                    .onEnded { amount in
+                                        finalAmount += currentAmount
+                                        currentAmount = 0
+                                        finalOpacity += currentOpacity
+                                        currentOpacity = 0
+                                    }
+                            )
                     }
                 }
             }
@@ -121,6 +138,7 @@ struct ContentView: View {
                 Text("Bicycle")
             } .tag(2)
             
+            //Airplane Tab View
             GeometryReader { geometry in
                 ZStack {
                     Path { path in
@@ -144,13 +162,15 @@ struct ContentView: View {
                           control: .init(x: 0, y: 0))
                     }
                     .fill(RadialGradient (gradient: colors2, center:.center, startRadius: geometry.size.width * 0.05, endRadius: geometry.size.width * 0.6))
+                    
+                    //airplane slides up on the tap gesture
                     if canScale {
                         Image(systemName: "airplane")
                             .resizable()
                             .rotationEffect(.degrees(-90))
                             .opacity(0.7)
                             .frame(width: 250, height: 250)
-                            .transition(.slide)
+                            .transition(.slipeUp)
                             .animation(.default)
                             .zIndex(1)
                     }
@@ -175,6 +195,7 @@ struct ContentView: View {
     }
 }
 
+// hexagon parameters for all 6 sides
 struct HexagonParameters {
     struct Segment {
         let line: CGPoint
